@@ -3,6 +3,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,6 +49,23 @@ public class MainFrame extends JFrame {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
 
+        setDefaultQuery();
+        insertButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                InputFrame inputFrame = new InputFrame();
+                try {
+                    inputFrame.setMainFrame();
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        } );
+    }
+
+
+    public void setDefaultQuery() throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectinventory", "root", "rootWIN123!");
 
         Statement statement = connection.createStatement();
@@ -78,8 +97,6 @@ public class MainFrame extends JFrame {
         statement.close();
         connection.close();
     }
-
-
 
 
 }
